@@ -1,45 +1,32 @@
-import math as m
+from typing import List
 
 
-def binarySearch(nums, target):
-    ctn = 0
-    num_len = len(nums)
-    x = m.floor(num_len / 2)
-    half = m.ceil(x / 2)
-    mx = m.ceil(m.log(num_len)) + 1
-    while ctn <= mx and x < num_len:
-        if target < nums[x]:
-            x = x - half
-        elif target > nums[x]:
-            x = x + half
+def search(collection: List, item):
+    low, high = 0, len(collection) - 1
+
+    while low <= high:
+        index = (low + high) // 2
+        if collection[index] < item:
+            low = index + 1
+        elif collection[index] > item:
+            high = index - 1
         else:
-            return x
-        half = m. ceil(half / 2)
-        ctn += 1
-    if x >= num_len:
-        x = num_len - 1
-    if 0 <= x < num_len:
-        if target == nums[x]:
-            return x
-        elif x > 0 and target == nums[x - 1]:
-            return x - 1
-        elif x < num_len - 1 and target == nums[x + 1]:
-            return x + 1
+            return index
+
+    return None
 
 
-def twoSum(nums, target):
+def solve(nums, target):
     x = 0
     while x < len(nums):
         t = target - nums[x]
-        index = binarySearch(nums, t)
+        index = search(nums, t)
 
         if index is not None and index != x:
-            if x < index:
-                return [x + 1, index + 1]
-            else:
-                return [index + 1, x + 1]
+            return [min(x + 1, index + 1), max(x + 1, index + 1)]
         x += 1
 
 
-bruh = [-1] * 29998 + [1,1]
-print(twoSum(bruh, 2))
+assert solve([-1] * 29998 + [1, 1], 2) == [29999, 30000]
+assert solve([2, 3, 4], 6) == [1, 3]
+assert solve([-1, -1] + [1] * 5, -2) == [1, 2]
