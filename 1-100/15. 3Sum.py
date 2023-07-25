@@ -6,7 +6,6 @@ def solve(nums, target=0):
             continue
         y, z = x + 1, len(nums) - 1
         while y < z:
-            print(v, nums[y], nums[z])
             s = v + nums[y] + nums[z]
             if s > target:
                 z -= 1
@@ -14,8 +13,6 @@ def solve(nums, target=0):
                 if s == target:
                     answer.append((v, nums[y], nums[z]))
                 y += 1
-                while y < len(nums) and nums[y] == nums[y - 1]:
-                    y += 1
     return answer
 
 
